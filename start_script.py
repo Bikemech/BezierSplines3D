@@ -1,13 +1,14 @@
-from matplotlib import pyplot as plt
-from  mpl_toolkits.mplot3d import Axes3D
-from matplotlib import animation
 from bezier import *
+from matplotlib import animation
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from random import randint
 
 
 ''' select one of the splines below or specify one your self. '''
 
 # Barrel roll
-A = Bezier([[0, 0, 0, 0, 1, 1, 1, 1], [0, 1, 1, 0, 0, 1, 1, 0], [0, 0, 1, 1, 1, 1, 0, 0]])
+# A = Bezier([[0, 0, 0, 0, 1, 1, 1, 1], [0, 1, 1, 0, 0, 1, 1, 0], [0, 0, 1, 1, 1, 1, 0, 0]])
 
 # Corkscrew spline
 # A = Bezier([[0, 1, 2, 1], [0, 0, 0, 1], [0, 2, 0, 1]])
@@ -20,6 +21,12 @@ A = Bezier([[0, 0, 0, 0, 1, 1, 1, 1], [0, 1, 1, 0, 0, 1, 1, 0], [0, 0, 1, 1, 1, 
 
 # Bow tie spline
 # A = Bezier([[0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 1], [0, 0, 0, 0, 0, 0]])
+
+# y = x - x^2
+A = Bezier([[0, 1, 2], [0, 1, 0], [0, 1, 0]])
+
+# random spline !!! WILL EAT YOUR MEMORY AND CPU !!!
+# A = Bezier([[randint(50, 450) for i in range(10)], [randint(50, 450) for j in range(10)], [randint(50, 450) for k in range(10)]])
 
 
 # setup plot figures

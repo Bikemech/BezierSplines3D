@@ -7,26 +7,8 @@ class bezOD:
     def __init__(self, points):
         self.base = points
 
-    def get_k(self, t):
-        vectors = []
-        for i in range(len(self.base) - 1):
-            vectors.append(self.base[i] + t * (self.base[i + 1] - self.base[i]))
-
-        # This could probably be done more efficiently....
-        # this is the part where we 'recursively' extract our
-        # value k, which is the parameter value of the entire
-        # set of points for this dimension.
-        while len(vectors) > 1:
-            temp = []
-            for i in range(len(vectors) - 1):
-                temp.append(vectors[i] + t * vectors[i + 1] - vectors[i])
-            vectors = temp
-
-        return vectors[0]
-
-
     # use this one to get the line instead of self.get_k()
-    def get_k2(self, t):
+    def get_k(self, t):
     	vectors = self.base.copy()
     	for j in range(1, len(vectors)):
     		for i in range(len(vectors) - j):
@@ -59,7 +41,7 @@ class Bezier:
             self.dimensions.append(bezOD(k))
 
     def get_k(self, t):
-        return tuple([D.get_k2(t) for D in self.dimensions])
+        return tuple([D.get_k(t) for D in self.dimensions])
 
     def yield_curve(self, resolution = 100):
         coordinates = []
