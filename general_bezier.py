@@ -89,51 +89,50 @@ class Bezier:
                 new[i].append(temp[j][i])
                 
         return new
+'''
+if __name__ == "__main__":
+
+	# A = Bezier([[0, 0, 0, 0, 1, 1, 1, 1], [0, 1, 1, 0, 0, 1, 1, 0], [0, 0, 1, 1, 1, 1, 0, 0]])
+	# A = Bezier([[0, 1, 2, 1], [0, 0, 0, 1], [0, 2, 0, 1]])
+	# A = Bezier([
+	#     [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3],
+	#     [0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 0],
+	#     [0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3]])
+	A = Bezier([[0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 1], [0, 0, 0, 0, 0, 0]])
 
 
+	fig = plt.figure()
+	ax1 = fig.add_subplot(111, projection = '3d')
 
-# A = Bezier([[0, 0, 0, 0, 1, 1, 1, 1], [0, 1, 1, 0, 0, 1, 1, 0], [0, 0, 1, 1, 1, 1, 0, 0]])
-# A = Bezier([[0, 1, 2, 1], [0, 0, 0, 1], [0, 2, 0, 1]])
-# A = Bezier([
-#     [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3],
-#     [0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 0],
-#     [0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3]])
-A = Bezier([[0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 1], [0, 0, 0, 0, 0, 0]])
+	x = []
+	y = []
+	z = []
+	line = A.yield_curve()
 
+	for i, j, k in line:
+	    x.append(i)
+	    y.append(j)
+	    z.append(k)
 
-fig = plt.figure()
-ax1 = fig.add_subplot(111, projection = '3d')
-# ax2 = fig.add_subplot(111, projection = '3d')
+	t = 0
 
-x = []
-y = []
-z = []
-line = A.yield_curve()
+	def animate(i):
+	    global t
+	    t += 0.005
+	    if t > 1:
+	        t = 0
 
-for i, j, k in line:
-    x.append(i)
-    y.append(j)
-    z.append(k)
+	    structs = A.test(t)
+	    ax1.clear()
+	    for C in structs:
+	        ax1.plot(*C, 'g')
 
-t = 0
+	    ax1.plot(*A.get_polygon(), c = 'k')
+	    ax1.plot(x, y, z, c = 'r')
+	    ki, kj, kk = A.get_k(t)
+	    ax1.plot([ki], [kj], [kk], 'bo')
 
-def animate(i):
-    global t
-    t += 0.005
-    if t > 1:
-        t = 0
+	ani = animation.FuncAnimation(fig, animate, interval = 1)
 
-    structs = A.test(t)
-    ax1.clear()
-    for C in structs:
-        ax1.plot(*C, 'g')
-
-    ax1.plot(*A.get_polygon(), c = 'k')
-    ax1.plot(x, y, z, c = 'r')
-    ki, kj, kk = A.get_k(t)
-    ax1.plot([ki], [kj], [kk], 'bo')
-
-ani = animation.FuncAnimation(fig, animate, interval = 1)
-
-plt.show()
-print(A.get_structure(0.5))
+	plt.show()
+	print(A.get_structure(0.5))'''
