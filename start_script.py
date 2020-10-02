@@ -7,6 +7,10 @@ from random import randint
 
 ''' select one of the splines below or specify one your self. '''
 
+# Circles
+# A = Bezier([[-1, -1, 1, 1, -1, -1], [0, 1, 1, -1, -1, 0], [0, 0, 0, 0, 0, 0]])
+A = Bezier([[-1, -1, 0, 1, 1, 1, 0, -1, -1], [0, 1, 1, 1, 0, -1, -1, -1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]])
+
 # Barrel roll
 # A = Bezier([[0, 0, 0, 0, 1, 1, 1, 1], [0, 1, 1, 0, 0, 1, 1, 0], [0, 0, 1, 1, 1, 1, 0, 0]])
 
@@ -23,11 +27,19 @@ from random import randint
 # A = Bezier([[0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 1], [0, 0, 0, 0, 0, 0]])
 
 # y = x - x^2
-A = Bezier([[0, 1, 2], [0, 1, 0], [0, 1, 0]])
+# A = Bezier([[0, 1, 2], [0, 1, 0], [0, 1, 0]])
 
 # random spline !!! WILL EAT YOUR MEMORY AND CPU !!!
 # A = Bezier([[randint(50, 450) for i in range(10)], [randint(50, 450) for j in range(10)], [randint(50, 450) for k in range(10)]])
 
+
+t = 0.0
+inc = 0.00
+
+
+
+##############################################################################
+##############################################################################
 
 # setup plot figures
 fig = plt.figure()
@@ -45,12 +57,9 @@ for i, j, k in line:
     y.append(j)
     z.append(k)
 
-
-t = 0
-
 def animate(i):
     global t
-    t += 0.005
+    t += inc
     if t > 1:
         t = 0
 
@@ -70,7 +79,30 @@ def animate(i):
     ax1.plot(x, y, z, c = 'r') # comment to hide spline.
 
 
-ani = animation.FuncAnimation(fig, animate, interval = 1)
+def frozen():
+    printf("frozen")
+
+    ki, kj, kk = A.get_k(t)
+    structs = A.test(t)
+
+    # comment out forloop to hide subvectors
+    for C in structs:
+        ax1.plot(*C, 'g')
+
+
+    # comment to hide features.
+    ax1.plot(*A.get_polygon(), c = 'k') # comment to hide outer lines.
+    ax1.plot([ki], [kj], [kk], 'bo') # comment to hide tracking marker.
+    ax1.plot(x, y, z, c = 'r') # comment to hide spline.
+
+
+if int != 0:
+	ani = animation.FuncAnimation(fig, animate, interval = 1)
+else:
+	frozen()
+
+
 
 plt.show()
-print(A.get_structure(0.5))
+print()
+A.dimensions[0].get_k_debug(0.5)

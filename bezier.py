@@ -2,6 +2,15 @@ from matplotlib import pyplot as plt
 from  mpl_toolkits.mplot3d import Axes3D
 from matplotlib import animation
 
+def showf(it):
+    for i in it:
+        o = str(round(i, 2))
+        if len(o) > 3:
+            print(o, end = "\t")
+        else:
+            print(o, end="\t\t")
+    print()
+
 # A class for one dimensional B-splines
 class bezOD:
     def __init__(self, points):
@@ -15,6 +24,19 @@ class bezOD:
     			vectors[i] = vectors[i] + t * (vectors[i + 1] - vectors[i])
 
     	return vectors[0]
+
+    def get_k_debug(self, t):
+        print("t =%.2f"%t)
+        vectors = self.base.copy()
+        showf(vectors)
+        for j in range(1, len(vectors)):
+            for i in range(len(vectors) - j):
+                vectors[i] = vectors[i] + t * (vectors[i + 1] - vectors[i])
+            vectors[i + 1] = 0
+            showf(vectors)
+
+        return vectors
+
 
 
     def get_p(self, t):
